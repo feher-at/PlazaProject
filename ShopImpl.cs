@@ -145,7 +145,30 @@ namespace PlazaProject
         }
         public Product BuyProduct(long barcode)
         {
-
+            if (IsOpen == false)
+            {
+                throw new ShopIsClosedException("The shop is closed sorry");
+            }
+            if (DictProducts.Count > 1)
+            {
+                for (int i = 0; i < DictProducts.Count; i++)
+                {
+                    if (DictProducts.ElementAt(i).Key == barcode && DictProducts.ElementAt(i).Value.Quantity == 0)
+                    {
+                        throw new OutOfStockException("This product run out of the stock");
+                        
+                    }
+                    else if (DictProducts.ElementAt(i).Key == barcode)
+                    {
+                        return DictProducts.ElementAt(i).Value.Product;
+                    }
+                }
+                throw new NoSuchProductException("There is no such product in the shop");
+            }
+            else
+            {
+                throw new NoSuchProductException("The shop is empty sorry");
+            }
         }
         public List<Product> BuyProducts(long barcode,int quantity)
         {
