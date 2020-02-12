@@ -13,7 +13,7 @@ namespace PlazaProject
         
         public string Owner { get; set; }
         public bool IsOpen { get; set; }
-        public List<Product> Products { get; set; }
+        
 
         private Dictionary<long, ShopImpl.ShopEntryImpl> DictProducts;
 
@@ -22,7 +22,7 @@ namespace PlazaProject
             this.Name = Name;
             this.Owner = Owner;
             this.IsOpen = IsOpen;
-            Products = new List<Product>();
+            
             DictProducts = new Dictionary<long, ShopImpl.ShopEntryImpl>();
            
         }
@@ -34,6 +34,21 @@ namespace PlazaProject
         public void Close()
         {
             IsOpen = false;
+        }
+        public List<Product> GetProducts()
+        {
+            if (IsOpen == false)
+            {
+                throw new ShopIsClosedException("The shop is closed sorry");
+            }
+            List<Product> allProduct = new List<Product>();
+            for (int i = 0; i < DictProducts.Count; i++)
+            {
+                allProduct.Add(DictProducts.ElementAt(i).Value.Product);
+            }
+            return allProduct;
+
+
         }
         public Product FindByName(string Name)
         {
