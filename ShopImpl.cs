@@ -47,6 +47,7 @@ namespace PlazaProject
                 {
                     if (DictProducts.ElementAt(i).Value.Product.Name == Name)
                     {
+
                         return DictProducts.ElementAt(i).Value.Product;
                     }
                 }
@@ -58,13 +59,41 @@ namespace PlazaProject
         }
         public float GetPrice(long barcode)
         {
-            float ez;
-            ez = 234.53F;
-            return ez;
+            if (IsOpen == false)
+            {
+                throw new ShopIsClosedException("The shop is closed sorry");
+            }
+            if (DictProducts.Count > 1)
+            {
+                for (int i = 0; i < DictProducts.Count; i++)
+                {
+                    if (DictProducts.ElementAt(i).Key == barcode)
+                    {
+                        return DictProducts.ElementAt(i).Value.Price;
+                    }
+                }
+                throw new NoSuchProductException("There is no such product in the shop");
+            }
+            else
+                throw new NoSuchProductException("The shop is empty sorry");
         }
         public bool HasProduct(long barcode)
         {
-            return true;
+            if (IsOpen == false)
+            {
+                throw new ShopIsClosedException("The shop is closed sorry");
+            }
+            if (DictProducts.Count > 1)
+            {
+                for (int i = 0; i < DictProducts.Count; i++)
+                {
+                    if (DictProducts.ElementAt(i).Key == barcode)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         public void AddNewProduct(Product product, int quantity, float price)
         {
