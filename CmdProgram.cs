@@ -53,7 +53,7 @@ namespace PlazaProject
                     ListingMenuPoints(createPlazaimplMenu);
                     if(answ == "1")
                     {
-                        Console.WriteLine("Give me the plaza name: ");
+                        Console.Write("Give me the plaza name: ");
                         PlazaImpl plaza = new PlazaImpl(Console.ReadLine());
                         while (true)
                         {
@@ -76,14 +76,14 @@ namespace PlazaProject
                                     List<string> shopanswer = new List<string>();
                                     foreach(string element in shopquestions)
                                     {
-                                        Console.WriteLine(element);
+                                        Console.Write(element);
                                         shopanswer.Add(Console.ReadLine());
                                     }
                                     plaza.AddShop(new ShopImpl(shopanswer[0], shopanswer[1]));
                                 }
                                 else if(plazansw == "3")
                                 {
-                                    Console.WriteLine("Give me the shop Name what you want to remove: ");
+                                    Console.Write("Give me the shop Name what you want to remove: ");
                                     string removingPlaza = Console.ReadLine();
                                     if(plaza.GetShops().Count == 0)
                                     {
@@ -100,8 +100,8 @@ namespace PlazaProject
                                 }
                                 else if(plazansw == "4")
                                 {
-                                    Console.WriteLine("Give me the sope you want to enter! : ");
-                                    string removingPlaza = Console.ReadLine();
+                                    Console.Write("Give me the soph you want to enter! : ");
+                                    string entryshop = Console.ReadLine();
                                     if (plaza.GetShops().Count == 0)
                                     {
                                         Console.WriteLine("Create a shop first please");
@@ -109,7 +109,7 @@ namespace PlazaProject
                                     }
                                     foreach (IShop element in plaza.GetShops())
                                     {
-                                        if (element.Name == removingPlaza)
+                                        if (element.Name == entryshop)
                                         {
                                             while (true)
                                             {
@@ -118,43 +118,43 @@ namespace PlazaProject
                                                     Console.WriteLine($"Welcome to the {element.Name} Shop!Press: ");
                                                     string shopansw = Console.ReadLine();
                                                     ListingMenuPoints(shopMenu);
-                                                    if(shopansw == "1")
+                                                    if (shopansw == "1")
                                                     {
                                                         if (element.GetProducts().Count == 0)
                                                         {
                                                             Console.WriteLine("Create a product first please");
                                                             return;
                                                         }
-                                                        foreach(Product product in element.GetProducts())
+                                                        foreach (Product product in element.GetProducts())
                                                         {
                                                             Console.WriteLine(product.ToString());
                                                         }
                                                     }
-                                                    else if(shopansw == "2")
+                                                    else if (shopansw == "2")
                                                     {
-                                                        Console.WriteLine("Give me the product name what you: ");
+                                                        Console.Write("Give me the product name what you: ");
                                                         Console.WriteLine(element.FindByName(Console.ReadLine()).ToString());
                                                     }
-                                                    else if(shopansw == "3")
+                                                    else if (shopansw == "3")
                                                     {
-                                                       
+
                                                         Console.WriteLine($"The shop's owner is{element.Owner}");
                                                     }
-                                                    else if(shopansw == "4")
+                                                    else if (shopansw == "4")
                                                     {
                                                         element.Open();
                                                         Console.WriteLine("The shop has been opened");
                                                     }
-                                                    else if(shopansw == "5")
+                                                    else if (shopansw == "5")
                                                     {
                                                         element.Close();
                                                         Console.WriteLine("The shop has been closed");
                                                     }
-                                                    else if(shopansw == "6")
+                                                    else if (shopansw == "6")
                                                     {
-                                                        Console.WriteLine("What kind of product you want to create");
+                                                        Console.Write("What kind of product you want to create");
                                                         string productType = Console.ReadLine().ToLower();
-                                                        if(productType == "foodproduct" || productType == "food product")
+                                                        if (productType == "foodproduct" || productType == "food product")
                                                         {
                                                             string[] foodData = {"Give me the barcode : ",
                                                                                  "Give me the food name: ",
@@ -166,14 +166,14 @@ namespace PlazaProject
                                                                                  "Give me the warranty day: "};
                                                             List<string> DatetimeAnsw = new List<string>();
                                                             List<string> foodDataAnsw = new List<string>();
-                                                            foreach(string data in foodData)
+                                                            foreach (string data in foodData)
                                                             {
-                                                                Console.WriteLine(data);
+                                                                Console.Write(data);
                                                                 foodDataAnsw.Add(Console.ReadLine());
                                                             }
                                                             foreach (string datatime in Datetime)
                                                             {
-                                                                Console.WriteLine(datatime);
+                                                                Console.Write(datatime);
                                                                 DatetimeAnsw.Add(Console.ReadLine());
                                                             }
                                                             FoodProduct foodProduct = new FoodProduct(Convert.ToInt64(foodDataAnsw[0]),
@@ -183,17 +183,17 @@ namespace PlazaProject
                                                                                                         new DateTime(Convert.ToInt32(DatetimeAnsw[0]),
                                                                                                                      Convert.ToInt32(DatetimeAnsw[1]),
                                                                                                                      Convert.ToInt32(DatetimeAnsw[2])));
-                                                            string[] quantityPrice= {"Give me the quantity: ",
+                                                            string[] quantityPrice = {"Give me the quantity: ",
                                                                                      "Give me the Price"};
                                                             List<string> quantityPriceansw = new List<string>();
-                                                            foreach(string data in quantityPrice)
+                                                            foreach (string data in quantityPrice)
                                                             {
-                                                                Console.WriteLine(data);
+                                                                Console.Write(data);
                                                                 quantityPriceansw.Add(Console.ReadLine());
                                                             }
                                                             element.AddNewProduct(foodProduct, Convert.ToInt32(quantityPriceansw[0]), float.Parse(quantityPriceansw[1]));
                                                         }
-                                                        else if(productType == "clothingproduct" || productType == "clothing product")
+                                                        else if (productType == "clothingproduct" || productType == "clothing product")
                                                         {
                                                             string[] clothdata = {"Give me the barcode : ",
                                                                                  "Give me the food name: ",
@@ -203,7 +203,7 @@ namespace PlazaProject
                                                             List<string> clothDataAnsw = new List<string>();
                                                             foreach (string data in clothdata)
                                                             {
-                                                                Console.WriteLine(data);
+                                                                Console.Write(data);
                                                                 clothDataAnsw.Add(Console.ReadLine());
                                                             }
                                                             ClothingProduct clothing = new ClothingProduct(Convert.ToInt64(clothDataAnsw[0]),
@@ -216,49 +216,101 @@ namespace PlazaProject
                                                             List<string> quantityPriceansw = new List<string>();
                                                             foreach (string data in quantityPrice)
                                                             {
-                                                                Console.WriteLine(data);
+                                                                Console.Write(data);
                                                                 quantityPriceansw.Add(Console.ReadLine());
                                                             }
                                                             element.AddNewProduct(clothing, Convert.ToInt32(quantityPriceansw[0]), float.Parse(quantityPriceansw[1]));
 
                                                         }
                                                     }
-                                                    else if(shopansw == "7")
+                                                    else if (shopansw == "7")
                                                     {
-                                                        Console.WriteLine("Product barcode and name");
-                                                        foreach(Product product in element.GetProducts())
+                                                        Console.WriteLine("Product barcode and name: ");
+                                                        foreach (Product product in element.GetProducts())
                                                         {
-                                                            
+
                                                             Console.WriteLine(product.Barcode + " " + product.Name);
 
                                                         }
-                                                        Console.WriteLine("Give me the barcode");
+                                                        Console.Write("Give me the barcode");
                                                         long barcodeansw = Convert.ToInt64(Console.ReadLine());
-                                                        Console.WriteLine("Give me the quantity");
+                                                        Console.Write("Give me the quantity");
                                                         int quantityansw = Convert.ToInt32(Console.ReadLine());
                                                         element.AddProduct(barcodeansw, quantityansw);
-                                                        
+
                                                     }
-                                                    else if(shopansw == "8")
+                                                    else if (shopansw == "8")
                                                     {
-                                                        Console.WriteLine("Product barcode and name");
+                                                        Console.WriteLine("Product barcode and name: ");
                                                         foreach (Product product in element.GetProducts())
                                                         {
                                                             Console.WriteLine(product.Barcode + " " + product.Name);
                                                         }
-                                                        Console.WriteLine("Give me the product's barcode which you want to buy: ");
+                                                        Console.Write("Give me the product's barcode which you want to buy: ");
                                                         long barcodeansw = Convert.ToInt64(Console.ReadLine());
-                                                        Console.WriteLine($"How many product you want to buy? : ");
+                                                        Console.Write($"How many product you want to buy? : ");
                                                         int quantityansw = Convert.ToInt32(Console.ReadLine());
-                                                        if(quantityansw == 1)
+                                                        if (quantityansw == 1)
+                                                        {
+                                                            cart.Add(element.BuyProduct(barcodeansw));
+                                                            prices.Add(element.GetPrice(barcodeansw));
+                                                        }
+                                                        else if (quantityansw > 1)
+                                                        {
+                                                            List<Product> buyedProduct = element.BuyProducts(barcodeansw, quantityansw);
+                                                            foreach (Product product in buyedProduct)
+                                                            {
+                                                                cart.Add(product);
+                                                                prices.Add(element.GetPrice(barcodeansw));
+                                                            }
+                                                        }
+                                                    }
+                                                    else if (shopansw == "9")
+                                                    {
+                                                        Console.Write("Product barcode and name: ");
+                                                        foreach (Product product in element.GetProducts())
                                                         {
 
+                                                            Console.WriteLine(product.Barcode + " " + product.Name);
+
+                                                        }
+                                                        Console.Write("Give me the barcode: ");
+                                                        long barcodeansw = Convert.ToInt64(Console.ReadLine());
+                                                        Console.WriteLine($"The product's price is {element.GetPrice(barcodeansw)}");
+                                                    }
+                                                    else if (shopansw == "10")
+                                                    {
+                                                        float finalPrice = 0;
+                                                        foreach(float price in prices)
+                                                        {
+                                                            finalPrice += price;
+                                                        }
+                                                        Console.WriteLine("The product(s) you want to buy: ");
+                                                        foreach (Product product in element.GetProducts())
+                                                        {
+                                                            Console.WriteLine(product.ToString());
+                                                        }
+                                                        Console.WriteLine($"It will be {finalPrice}FT altogether");
+                                                        Console.Write("You want to buy this product(s)? :");
+
+                                                        string buyansw = Console.ReadLine().ToLower();
+                                                        if(buyansw == "yes" || buyansw == "y")
+                                                        {
+                                                            Console.WriteLine("Thank you for your visit");
+                                                            cart.Clear();
+                                                            prices.Clear();
+                                                            break;
+                                                        }
+                                                        if (buyansw == "no" || buyansw == "n")
+                                                        {
+                                                            Console.WriteLine("Then please continue the purchase");
                                                         }
                                                     }
                                                 }
-                                                catch(Exception ex)
-                                                { }
+                                                catch (Exception ex)
+                                                { Console.WriteLine(ex.Message); }
                                             }
+                                        }
                                     }
                                 }
 
