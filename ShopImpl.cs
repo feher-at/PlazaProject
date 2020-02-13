@@ -6,25 +6,25 @@ using System.Linq;
 
 namespace PlazaProject
 {
-    public class ShopImpl:IShop
+    public class ShopImpl : IShop
     {
-       
+
         public string Name { get; set; }
-        
+
         public string Owner { get; set; }
         public bool IsOpen { get; set; }
-        
+
 
         private Dictionary<long, ShopImpl.ShopEntryImpl> DictProducts;
 
-        public ShopImpl(string Name,string Owner,bool IsOpen)
+        public ShopImpl(string Name, string Owner, bool IsOpen)
         {
             this.Name = Name;
             this.Owner = Owner;
             this.IsOpen = IsOpen;
-            
+
             DictProducts = new Dictionary<long, ShopImpl.ShopEntryImpl>();
-           
+
         }
 
         public void Open()
@@ -112,7 +112,7 @@ namespace PlazaProject
         }
         public void AddNewProduct(Product product, int quantity, float price)
         {
-            if(IsOpen == false)
+            if (IsOpen == false)
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
@@ -131,11 +131,11 @@ namespace PlazaProject
                 ShopEntryImpl shopEntry = new ShopEntryImpl(product, quantity, price);
                 DictProducts[product.Barcode] = shopEntry;
             }
-            
-            
+
+
 
         }
-        public void AddProduct(long barcode,int quantity)
+        public void AddProduct(long barcode, int quantity)
         {
             if (IsOpen == false)
             {
@@ -171,7 +171,7 @@ namespace PlazaProject
                     if (DictProducts.ElementAt(i).Key == barcode && DictProducts.ElementAt(i).Value.Quantity == 0)
                     {
                         throw new OutOfStockException("This product run out of the stock");
-                        
+
                     }
                     else if (DictProducts.ElementAt(i).Key == barcode)
                     {
@@ -185,10 +185,32 @@ namespace PlazaProject
                 throw new NoSuchProductException("The shop is empty sorry");
             }
         }
-        public List<Product> BuyProducts(long barcode,int quantity)
+        public List<Product> BuyProducts(long barcode, int quantity)
         {
+            List<Product> BuyedProducts = new List<Product>();
+            if (IsOpen == false)
+            {
+                throw new ShopIsClosedException("The shop is closed sorry");
+            }
 
+            for (int i = 0; i < DictProducts.Count; i++)
+            {
+                if (DictProducts.ElementAt(i).Key == barcode && (DictProducts.ElementAt(i).Value.Quantity == 0 || DictProducts.ElementAt(i).Value.Quantity < quantity))
+                {
+                    throw new OutOfStockException("This product run out of the stock");
+                }
+                else if (DictProducts.ElementAt(i).Key == barcode)
+                {
+                    for (int index = 1; i <= quantity; index++)
+                    {
+                        BuyedProducts.Add(DictProducts.ElementAt(i).Value.Product);
+                    }
+                    return BuyedProducts;
+                }
+            }
+            throw new NoSuchProductException("There is no such product in this shop");
         }
+
 
 
         class ShopEntryImpl
@@ -197,7 +219,7 @@ namespace PlazaProject
             public Product Product { get; set; }
 
             public int Quantity { get; set; }
-            
+
             public float Price { get; set; }
             public ShopEntryImpl(Product Product, int Quantity, float Price)
             {
@@ -206,7 +228,7 @@ namespace PlazaProject
                 this.Price = Price;
 
             }
-            
+
             public void IncreaseQuantity(int amount)
             {
                 Quantity += amount;
@@ -217,4 +239,5 @@ namespace PlazaProject
             }
         }
     }
+    
 }

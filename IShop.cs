@@ -9,7 +9,7 @@ namespace PlazaProject
         string Name { get; set; }
         string Owner { get; set; }
         bool IsOpen { get; set; }
-        List<Product> Products { get; set; }
+        List<Product> GetProducts();
         void Open();
         void Close();
         Product FindByName(string name);
