@@ -6,8 +6,8 @@ namespace PlazaProject
 {
     interface IShop
     {
-        string Name { get; set; }
-        string Owner { get; set; }
+        string Name { get;}
+        string Owner { get;}
         bool IsOpen { get; set; }
         List<Product> GetProducts();
         void Open();

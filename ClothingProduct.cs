@@ -13,6 +13,12 @@ namespace PlazaProject
             this.Material = Material;
             this.Type = Type;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Barcode : {this.Barcode}, Name : {this.Name}, Manufacturer : {this.Manufacturer}, Material : {this.Material}, Type : {this.Type}");
+            return sb.ToString();
+        }
 
     }
 }

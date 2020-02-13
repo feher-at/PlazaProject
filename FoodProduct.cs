@@ -17,6 +17,12 @@ namespace PlazaProject
         {
             return true;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Barcode : {this.Barcode}, Name : {this.Name}, Manufacturer : {this.Manufacturer}, Calories : {this.Calories}, Bestbefore : {this.bestbefore}");
+            return sb.ToString();
+        }
 
     }
 }

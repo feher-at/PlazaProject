@@ -9,19 +9,19 @@ namespace PlazaProject
     public class ShopImpl : IShop
     {
 
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public string Owner { get; set; }
+        public string Owner { get; }
         public bool IsOpen { get; set; }
 
 
         private Dictionary<long, ShopImpl.ShopEntryImpl> DictProducts;
 
-        public ShopImpl(string Name, string Owner, bool IsOpen)
+        public ShopImpl(string Name, string Owner)
         {
             this.Name = Name;
             this.Owner = Owner;
-            this.IsOpen = IsOpen;
+            IsOpen = true;
 
             DictProducts = new Dictionary<long, ShopImpl.ShopEntryImpl>();
 
@@ -141,21 +141,14 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (HasProduct(barcode) == true)
             {
-                for (int i = 0; i < DictProducts.Count; i++)
-                {
-                    if (DictProducts.ElementAt(i).Key == barcode)
-                    {
-                        DictProducts.ElementAt(i).Value.Quantity += quantity;
-                        break;
-                    }
-                }
-                throw new NoSuchProductException("There is no such product in the shop");
+
+                DictProducts[barcode].Quantity += quantity;
             }
             else
             {
-                throw new NoSuchProductException("The shop is empty sorry");
+                throw new NoSuchProductException("There is no such product sorry");
             }
         }
         public Product BuyProduct(long barcode)
@@ -164,26 +157,21 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (HasProduct(barcode) == true && DictProducts[barcode].Quantity == 0)
             {
-                for (int i = 0; i < DictProducts.Count; i++)
-                {
-                    if (DictProducts.ElementAt(i).Key == barcode && DictProducts.ElementAt(i).Value.Quantity == 0)
-                    {
-                        throw new OutOfStockException("This product run out of the stock");
+                throw new OutOfStockException("This product run out of the stock");
 
-                    }
-                    else if (DictProducts.ElementAt(i).Key == barcode)
-                    {
-                        return DictProducts.ElementAt(i).Value.Product;
-                    }
-                }
-                throw new NoSuchProductException("There is no such product in the shop");
+            }
+            else if(HasProduct(barcode) == true)
+            {
+                return DictProducts[barcode].Product;
             }
             else
             {
-                throw new NoSuchProductException("The shop is empty sorry");
+                throw new NoSuchProductException("There is no such product sorry");
             }
+
+           
         }
         public List<Product> BuyProducts(long barcode, int quantity)
         {
@@ -192,23 +180,29 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-
-            for (int i = 0; i < DictProducts.Count; i++)
+            if (HasProduct(barcode) == true && (DictProducts[barcode].Quantity == 0 || DictProducts[barcode].Quantity < quantity))
             {
-                if (DictProducts.ElementAt(i).Key == barcode && (DictProducts.ElementAt(i).Value.Quantity == 0 || DictProducts.ElementAt(i).Value.Quantity < quantity))
-                {
-                    throw new OutOfStockException("This product run out of the stock");
-                }
-                else if (DictProducts.ElementAt(i).Key == barcode)
-                {
-                    for (int index = 1; i <= quantity; index++)
-                    {
-                        BuyedProducts.Add(DictProducts.ElementAt(i).Value.Product);
-                    }
-                    return BuyedProducts;
-                }
+                throw new OutOfStockException("This product run out of the stock");
             }
-            throw new NoSuchProductException("There is no such product in this shop");
+            else if (HasProduct(barcode) == true)
+            {
+                for (int index = 1; index <= quantity; index++)
+                {
+                    BuyedProducts.Add(DictProducts[barcode].Product);
+                }
+                return BuyedProducts;
+            }
+            else
+            {
+                throw new NoSuchProductException("There is no such product in this shop");
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Name : {this.Name}, Owner : {this.Owner}");
+            return sb.ToString();
         }
 
 
