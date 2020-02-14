@@ -56,7 +56,7 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (DictProducts.Count >= 1)
             {
                 for (int i = 0; i < DictProducts.Count; i++)
                 {
@@ -78,7 +78,7 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (DictProducts.Count >= 1)
             {
                 for (int i = 0; i < DictProducts.Count; i++)
                 {
@@ -98,7 +98,7 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (DictProducts.Count >= 1)
             {
                 for (int i = 0; i < DictProducts.Count; i++)
                 {
@@ -116,7 +116,7 @@ namespace PlazaProject
             {
                 throw new ShopIsClosedException("The shop is closed sorry");
             }
-            if (DictProducts.Count > 1)
+            if (DictProducts.Count >= 1)
             {
                 foreach (long element in DictProducts.Keys)
                 {

@@ -6,11 +6,13 @@ namespace PlazaProject
 {
     class CmdProgram
     {
-        private List<Product> cart;
-        private List<float> prices;
+        private List<Product> cart = new List<Product>();
+        private List<float> prices = new List<float>();
 
         public CmdProgram(string[] args)
-        { }
+        {
+            
+        }
 
         private void ListingMenuPoints(string[] menu)
         {
@@ -49,8 +51,9 @@ namespace PlazaProject
                 try
                 {
                     Console.WriteLine("There are no plaza created yet! Press");
-                    string answ = Console.ReadLine();
                     ListingMenuPoints(createPlazaimplMenu);
+                    string answ = Console.ReadLine();
+                    
                     if(answ == "1")
                     {
                         Console.Write("Give me the plaza name: ");
@@ -60,8 +63,9 @@ namespace PlazaProject
                             try
                             {
                                 Console.WriteLine($"Welcome to the {plaza.Name}! Press ");
-                                string plazansw = Console.ReadLine();
                                 ListingMenuPoints(plazaImplMenu);
+                                string plazansw = Console.ReadLine();
+                                
                                 if(plazansw == "1")
                                 {
                                     foreach(IShop element in plaza.GetShops())
@@ -116,18 +120,21 @@ namespace PlazaProject
                                                 try
                                                 {
                                                     Console.WriteLine($"Welcome to the {element.Name} Shop!Press: ");
-                                                    string shopansw = Console.ReadLine();
                                                     ListingMenuPoints(shopMenu);
+                                                    string shopansw = Console.ReadLine();
                                                     if (shopansw == "1")
                                                     {
                                                         if (element.GetProducts().Count == 0)
                                                         {
                                                             Console.WriteLine("Create a product first please");
-                                                            return;
+
                                                         }
-                                                        foreach (Product product in element.GetProducts())
+                                                        else
                                                         {
-                                                            Console.WriteLine(product.ToString());
+                                                            foreach (Product product in element.GetProducts())
+                                                            {
+                                                                Console.WriteLine(product.ToString());
+                                                            }
                                                         }
                                                     }
                                                     else if (shopansw == "2")
@@ -138,7 +145,7 @@ namespace PlazaProject
                                                     else if (shopansw == "3")
                                                     {
 
-                                                        Console.WriteLine($"The shop's owner is{element.Owner}");
+                                                        Console.WriteLine($"The shop's owner is {element.Owner}");
                                                     }
                                                     else if (shopansw == "4")
                                                     {
@@ -152,7 +159,7 @@ namespace PlazaProject
                                                     }
                                                     else if (shopansw == "6")
                                                     {
-                                                        Console.Write("What kind of product you want to create");
+                                                        Console.Write("What kind of product you want to create: ");
                                                         string productType = Console.ReadLine().ToLower();
                                                         if (productType == "foodproduct" || productType == "food product")
                                                         {
@@ -184,7 +191,7 @@ namespace PlazaProject
                                                                                                                      Convert.ToInt32(DatetimeAnsw[1]),
                                                                                                                      Convert.ToInt32(DatetimeAnsw[2])));
                                                             string[] quantityPrice = {"Give me the quantity: ",
-                                                                                     "Give me the Price"};
+                                                                                     "Give me the Price: "};
                                                             List<string> quantityPriceansw = new List<string>();
                                                             foreach (string data in quantityPrice)
                                                             {
@@ -196,7 +203,7 @@ namespace PlazaProject
                                                         else if (productType == "clothingproduct" || productType == "clothing product")
                                                         {
                                                             string[] clothdata = {"Give me the barcode : ",
-                                                                                 "Give me the food name: ",
+                                                                                 "Give me the cloth name: ",
                                                                                  "Give me the manufacturer: ",
                                                                                  "Give me the material: ",
                                                                                  "Give me the type: " };
@@ -212,7 +219,7 @@ namespace PlazaProject
                                                                                                             clothDataAnsw[3],
                                                                                                             clothDataAnsw[4]);
                                                             string[] quantityPrice = {"Give me the quantity: ",
-                                                                                      "Give me the Price"};
+                                                                                      "Give me the Price: "};
                                                             List<string> quantityPriceansw = new List<string>();
                                                             foreach (string data in quantityPrice)
                                                             {
@@ -232,9 +239,9 @@ namespace PlazaProject
                                                             Console.WriteLine(product.Barcode + " " + product.Name);
 
                                                         }
-                                                        Console.Write("Give me the barcode");
+                                                        Console.Write("Give me the barcode: ");
                                                         long barcodeansw = Convert.ToInt64(Console.ReadLine());
-                                                        Console.Write("Give me the quantity");
+                                                        Console.Write("Give me the quantity: ");
                                                         int quantityansw = Convert.ToInt32(Console.ReadLine());
                                                         element.AddProduct(barcodeansw, quantityansw);
 
@@ -286,12 +293,12 @@ namespace PlazaProject
                                                             finalPrice += price;
                                                         }
                                                         Console.WriteLine("The product(s) you want to buy: ");
-                                                        foreach (Product product in element.GetProducts())
+                                                        foreach (Product product in cart)
                                                         {
                                                             Console.WriteLine(product.ToString());
                                                         }
                                                         Console.WriteLine($"It will be {finalPrice}FT altogether");
-                                                        Console.Write("You want to buy this product(s)? :");
+                                                        Console.Write("You want to buy this product(s)? : ");
 
                                                         string buyansw = Console.ReadLine().ToLower();
                                                         if(buyansw == "yes" || buyansw == "y")
@@ -313,11 +320,33 @@ namespace PlazaProject
                                         }
                                     }
                                 }
+                                else if(plazansw == "5")
+                                {
+                                    plaza.Open();
+                                    Console.WriteLine("The plaza has been opened");
+                                }
+                                else if(plazansw == "6")
+                                {
+                                    plaza.Close();
+                                    Console.WriteLine("The plaza has been closed");
+                                }
+                                else if(plazansw == "7")
+                                {
+                                    if (plaza.IsOpen())
+                                        Console.WriteLine("The plaza is open");
+                                    else
+                                        Console.WriteLine("The plaza is closed");
+                                }
+                                else if(plazansw == "8")
+                                {
+                                    Console.WriteLine("you are leaving the plaza");
+                                    break;
+                                }
 
                             }
                             catch(Exception ex)
                             {
-
+                                Console.WriteLine(ex.Message);
                             }
                         }
 
@@ -330,7 +359,9 @@ namespace PlazaProject
                     }
                 }
                 catch(Exception ex)
-                { }
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
             
         }

@@ -6,7 +6,8 @@ namespace PlazaProject
     {
         static void Main(string[] args)
         {
-            
+            CmdProgram cmdProgram = new CmdProgram(args);
+            cmdProgram.run();
         }
     }
 }
